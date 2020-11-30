@@ -21,3 +21,38 @@ body {
     padding: 0;
     margin: 0;
 }
+/* typography */
+h1 {
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    padding: 0;
+    margin: 0; 
+}
+
+/* header */
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    padding: 40px 20px;
+}
+header h1 svg {
+    display: inline-block;
+    vertical-align: middle;
+    fill: #3B8EA5;
+}
+header h1 span {
+    display: block;
+}
+@media(min-width: 430px) {
+    header h1 svg {
+        margin-right: 30px;
+    }
+    header h1 span {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
