@@ -29,6 +29,39 @@ h1 {
     padding: 0;
     margin: 0; 
 }
+h2 {
+    font-size: 26px;
+    font-weight: 700;
+    padding: 0;
+    margin: 0 0 30px 0;
+}
+p {
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+/* buttons */
+.btn {
+    display: inline-block;
+    vertical-align: middle;
+    color: #fff;
+    font-size: 16px;
+    line-height: 1;
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: transparent;
+    padding: 14px 25px;
+    margin: 0;
+    transition: background-color 0.4s ease;
+    cursor: pointer;
+}
+.btn.btn-solid {
+    background-color: #3B8EA5;
+}
+.btn.btn-solid:hover {
+    background-color: #45a3bd;
+}
 
 /* header */
 header {
@@ -55,4 +88,28 @@ header h1 span {
         display: inline-block;
         vertical-align: middle;
     }
+}
+
+/* info container */
+.info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    padding: 8% 20px 80px 20px;
+}
+@media(min-width: 768px) {
+    .info-container {
+        padding: 120px 20px 80px 20px;
+    }
+}
+.info-container .content-wrapper {
+    max-width: 480px;
+    padding: 40px;
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgb(74 79 84 / 16%);
+}
+.info-container .content-wrapper .btn {
+    margin-top: 20px;
 }
