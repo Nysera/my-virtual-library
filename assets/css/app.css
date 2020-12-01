@@ -212,6 +212,10 @@ header h1 span {
         height: auto;
     } 
 }
+.form-modal .form-wrapper.active {
+    transform: translateY(0);
+    transition: transform 0.7s ease;
+}
 
 /* overlay backdrop */
 .overlay-backdrop {
@@ -224,4 +228,9 @@ header h1 span {
     z-index: -1;
     transition: opacity 0.7s ease, z-index 0s 0.7s;
     opacity: 0;
+}
+.overlay-backdrop.active {
+    opacity: 1;
+    z-index: 10;
+    transition-delay: 0s;
 }
