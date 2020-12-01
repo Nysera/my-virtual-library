@@ -19,11 +19,50 @@
         <h2>Let's get started!</h2>
         <div class="content-wrapper">
             <p>Want to keep a record of all the books you have read or wanting to read?</p>
-            <p><b>My Virtual Library</b> is a fast and simple way to organize your book library online.</p>
+            <p><b>My Virtual  Library</b> is a fast and simple way to organize your book library online.</p>
             <p>Click the button below to add your first book.</p>
             <button id="" class="btn btn-solid">Add Book</button>
         </div>
     </div>
+    <div class="form-modal" style="display: none">
+        <div id="" class="form-wrapper" style="display: none;">
+            <div class="title">
+                <h2>Add a new book</h2>
+                <button class="btn close-modal">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16"><path d="M13.957 3.457l-1.414-1.414-4.543 4.543-4.543-4.543-1.414 1.414 4.543 4.543-4.543 4.543 1.414 1.414 4.543-4.543 4.543 4.543 1.414-1.414-4.543-4.543z"></path></svg>
+                </button>
+            </div>
+            <div class="input-wrapper">
+                <label for="title">Title:</label>
+                <input id="title" type="text" name="title">
+            </div>
+            <div class="input-wrapper">
+                <label for="author">Author:</label>
+                <input id="author" type="text" name="author">
+            </div>
+            <div class="input-wrapper">
+                <label for="pages">Number Of Pages:</label>
+                <input id="pages" type="text" name="pages">
+            </div>
+            <div class="input-wrapper">
+                <label for="image-url">Cover Image URL:</label>
+                <input id="image-url" type="text" name="image-url">
+            </div>
+            <div class="input-wrapper">
+                <label for="read-status">Read Status:</label>
+                <select id="read-status" name="read-status">
+                    <option value="">-- Please select an option --</option>
+                    <option value="">Read</option>
+                    <option value="">In Progress</option>
+                    <option value="">Not Read</option>
+                </select>
+            </div>
+            <div class="input-wrapper submit">
+                <button id="" class="btn btn-solid">Add Book</button>
+            </div>
+        </div>
+    </div>
+    <div class="overlay-backdrop"></div>
 
 
     

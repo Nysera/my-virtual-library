@@ -63,6 +63,42 @@ p {
     background-color: #45a3bd;
 }
 
+/* inputs */
+label {
+    display: block;
+    color: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    padding-bottom: 12px;
+    margin: 0;
+}
+input[type="text"] {
+    display: block;
+    width: 100%;
+    height: 40px;
+    color: inherit;
+    font-family: inherit;
+    font-size: 16px;
+    border: 1px solid #ECEBEC;
+    border-radius: 4px;
+    background-color: #F6F6F6;
+    padding: 9px;
+    margin: 0;
+
+}
+select {
+    width: 100%;
+    height: 40px;
+    color: inherit;
+    font-family: inherit;
+    font-size: 16px;
+    border: 1px solid #ECEBEC;
+    border-radius: 4px;
+    background-color: #F6F6F6;
+    padding: 7px;
+    margin: 0;
+}
+
 /* header */
 header {
     display: flex;
@@ -112,4 +148,80 @@ header h1 span {
 }
 .info-container .content-wrapper .btn {
     margin-top: 20px;
+}
+/* form modal */
+.form-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    opacity: 0;
+}
+.form-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form-modal .form-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgb(74 79 84 / 30%);
+    transform: translateY(100px);
+    transition: transform 0.7s ease;
+    overflow-y: auto;
+}
+.form-modal .form-wrapper .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.form-modal .form-wrapper .title button {
+    width: 22px;
+    height: 22px;
+    padding: 0;
+}
+.form-modal .form-wrapper .title button svg {
+    display: block;
+    fill: #4a4f54;
+    transition: fill 0.4s ease;
+}
+.form-modal .form-wrapper .title button:hover svg {
+    fill: #3B8EA5;
+}
+.form-modal .form-wrapper .title h2 {
+    margin: 0;
+}
+.form-modal .form-wrapper .input-wrapper {
+    margin-bottom: 30px;
+}
+.form-modal .form-wrapper .input-wrapper.submit {
+    margin: 24px 0 0;
+}
+@media (min-width: 620px) {
+    .form-modal .form-wrapper {
+        max-width: 500px;
+        height: auto;
+    } 
+}
+
+/* overlay backdrop */
+.overlay-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(74 79 84 / 78%);
+    z-index: -1;
+    transition: opacity 0.7s ease, z-index 0s 0.7s;
+    opacity: 0;
 }
