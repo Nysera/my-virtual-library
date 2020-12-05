@@ -1,16 +1,47 @@
-const addBook = document.querySelector("#add-book");
+const addBookBtn = document.querySelector("#add-book");
 const formModal = document.querySelector(".form-modal");
 const formModalInner = document.querySelector(".form-modal_inner")
 const overlayBackdrop = document.querySelector(".overlay-backdrop");
+const bookContainer = document.querySelector(".book-container");
+const infoContainer = document.querySelector(".info-container");
+
+let myLibrary = [];
 
 
-const getBookValues = function() {
+class Book {
+    constructor() {}
+
+    createBook(attributes) {
+        attributes.id = this.bookId();
+        const records = this.getAll();
+        records.push(attributes);
+        this.writeAll(records);
+    }
+    getAll() {
+        return myLibrary;
+    }
+    writeAll(records) {
+        myLibrary = records;
+    }
+    bookId() {
+        return myLibrary.length + 1;
+    }
+};
+
+const submitBook = function() {
     const title = document.querySelector("#title").value;
     const author = document.querySelector("#author").value;
     const pages = document.querySelector("#pages").value;
     const imageUrl = document.querySelector("#image-url").value;
     const readStatus = document.querySelector("#read-status").value;
+
+    const newBook = new Book();
+    newBook.createBook({ title, author, pages, imageUrl, readStatus });
+
+    const books = newBook.getAll();
+    bookContainer.innerHTML = bookContainerTemplate(books);
     
+    hideInfoContainer();
     closeModal();
 };
 
@@ -34,9 +65,16 @@ const closeModal = function() {
     }, 400);
 };
 
+const hideInfoContainer = function() {
+    const bookContainerHeader = document.querySelector(".book-container_header");
 
+    if (myLibrary.length >= 1) {
+        infoContainer.style.display = "none";
+        bookContainerHeader.append(addBookBtn);
+    }
+}
 
-addBook.addEventListener("click", openModal);
+addBookBtn.addEventListener("click", openModal);
 document.addEventListener("click", function(event) {
     const { target } = event;
 
@@ -44,6 +82,6 @@ document.addEventListener("click", function(event) {
         closeModal();
     } else if (target.id === "submit-book") {
         event.preventDefault();
-        getBookValues();
+        submitBook();
     }
 });
