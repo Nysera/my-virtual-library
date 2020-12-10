@@ -49,6 +49,7 @@ const openModal = function() {
     formModalInner.innerHTML = addBookTemplate();
     formModal.style.display = "flex";
     formModal.style.opacity = "1";
+    document.body.style.overflow = "hidden";
     setTimeout(function() {
         overlayBackdrop.classList.add("active");
         formModalInner.classList.add("active");
@@ -62,6 +63,7 @@ const closeModal = function() {
         formModal.style.display = "none";
         formModal.style.opacity = "0";
         formModalInner.innerHTML = "";
+        document.body.style.overflow = "";
     }, 400);
 };
 
@@ -74,6 +76,23 @@ const hideInfoContainer = function() {
     }
 }
 
+const showBookDetails = function(target) {
+    target.closest(".grid-item").querySelector(".grid-item_details").classList.add("active");
+    overlayBackdrop.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+const hideBookDetails = function() {
+    document.querySelectorAll(".grid-item_details").forEach(function(button){
+        button.classList.remove("active");
+    });
+    overlayBackdrop.classList.remove("active");
+    document.body.style.overflow = "";
+};
+
+
+
+
 addBookBtn.addEventListener("click", openModal);
 document.addEventListener("click", function(event) {
     const { target } = event;
@@ -83,5 +102,9 @@ document.addEventListener("click", function(event) {
     } else if (target.id === "submit-book") {
         event.preventDefault();
         submitBook();
+    } else if (target.classList.contains("show-details")) {
+        showBookDetails(target);
+    } else if (target.classList.contains("close-details")) {
+        hideBookDetails();
     }
 });
