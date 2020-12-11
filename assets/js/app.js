@@ -24,8 +24,29 @@ class Book {
         myLibrary = records;
     }
     bookId() {
-        return myLibrary.length + 1;
+        return `${myLibrary.length + 1}`;
     }
+    delete(bookId) {
+        const records = this.getAll();
+        const filtered = records.filter(function(record){
+            return record.id !== bookId;
+        });
+        this.writeAll(filtered);
+    }
+};
+
+
+const deleteBook = function(target) {
+    const bookId = target.closest(".grid-item").id;
+    const book = new Book();
+    book.delete(bookId);
+
+    const books = book.getAll();
+    bookContainer.innerHTML = bookContainerTemplate(books);
+
+    hideInfoContainer();
+    closeModal();
+
 };
 
 const submitBook = function() {
@@ -73,6 +94,9 @@ const hideInfoContainer = function() {
     if (myLibrary.length >= 1) {
         infoContainer.style.display = "none";
         bookContainerHeader.append(addBookBtn);
+    } else {
+        infoContainer.style.display = "flex";
+        infoContainer.querySelector(".info-container_content").append(addBookBtn);
     }
 }
 
@@ -106,5 +130,8 @@ document.addEventListener("click", function(event) {
         showBookDetails(target);
     } else if (target.classList.contains("close-details")) {
         hideBookDetails();
+    }
+    else if (target.classList.contains("delete-btn")) {
+        deleteBook(target);
     }
 });
