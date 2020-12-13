@@ -51,7 +51,7 @@ const bookContainerTemplate = function(books){
                         <span>Status:</span> ${book.readStatus}
                         </div>
                         <div class="content_buttons">
-                            <button class="btn btn-solid">Edit</button><button class="btn btn-hollow delete-btn">Delete</button>
+                            <button class="btn btn-solid edit-btn">Edit</button><button class="btn btn-hollow delete-btn">Delete</button>
                         </div>
                     </div>
                 </div>
