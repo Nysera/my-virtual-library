@@ -5,18 +5,7 @@ const overlayBackdrop = document.querySelector(".overlay-backdrop");
 const bookContainer = document.querySelector(".book-container");
 const infoContainer = document.querySelector(".info-container");
 
-let myLibrary = [
-    {title: "A Time for Mercy", author: "John Grisham", pages: "320", imageUrl: "https://www.booktopia.com.au/http_coversbooktopiacomau/big/9781529342338/7700/a-time-for-mercy.webp", readStatus: "Not Read", id: "1"},
-    {title: "Elsewhere", author: "Dean Koontz", pages: "368", imageUrl: "https://www.booktopia.com.au/http_coversbooktopiacomau/big/9781460756676/6503/elsewhere.webp", readStatus: "In Progress", id: "2"},
-    {title: "Song of the Crocodile", author: "Nardi Simpson", pages: "416", imageUrl: "https://www.booktopia.com.au/http_coversbooktopiacomau/500/9780733643743/2504/song-of-the-crocodile.jpg", readStatus: "Read", id: "3"},
-    {title: "Harry Potter and the Deathly Hallows", author: "J. K. Rowling", pages: "608", imageUrl: "https://www.booktopia.com.au/http_coversbooktopiacomau/500/9781408835029/0000/harry-potter-and-the-deathly-hallows.jpg", readStatus: "Not Read", id: "4"},
-    {title: "Darkness is Golden", author: "Mary Hoang", pages: "320", imageUrl: "https://www.booktopia.com.au/http_coversbooktopiacomau/500/9781925700718/8314/darkness-is-golden.jpg", readStatus: "Read", id: "5"},
-    {title: "Tell Me Lies", author: "J.P. Pomare", pages: "272", imageUrl: "https://www.booktopia.com.au/http_coversbooktopiacomau/500/9781869718169/4848/tell-me-lies.jpg", readStatus: "Not Read", id: "6"},
-    {title: "Stuff You Should Know", author: "Josh Clark, Chuck Bryant", pages: "336", imageUrl: "https://www.booktopia.com.au/http_coversbooktopiacomau/500/9780733645686/3508/stuff-you-should-know.jpg", readStatus: "In Progress", id: "7"},
-    {title: "Deadly Cross", author: "James Patterson", pages: "432", imageUrl: "https://www.booktopia.com.au/http_coversbooktopiacomau/500/9781780899497/3273/deadly-cross.jpg", readStatus: "In Progress", id: "8"},
-    {title: "Explore Your World: Weird, Wild, Amazing!", author: "Tim Flannery, Sam Caldwell (Illustrator)", pages: "256", imageUrl: "https://www.booktopia.com.au/http_coversbooktopiacomau/500/9781760501587/9209/explore-your-world-weird-wild-amazing-.jpg", readStatus: "Read", id: "9"},
-    {title: "The Sentinel", author: "lee Child, Andrew Child", pages: "400", imageUrl: "", readStatus: "Not Read", id: "10"}
-];
+let myLibrary = [];
 
 
 class Book {
