@@ -4,6 +4,9 @@ const formModalInner = document.querySelector(".form-modal_inner")
 const overlayBackdrop = document.querySelector(".overlay-backdrop");
 const bookContainer = document.querySelector(".book-container");
 const infoContainer = document.querySelector(".info-container");
+const storageSettings = document.querySelector(".storage-settings");
+const localStorageBtn = document.querySelector("#local-store");
+const noStorageBtn = document.querySelector("#no-store");
 
 let myLibrary = [];
 
@@ -41,7 +44,6 @@ class Book {
             return record.id === bookId;
         });
         Object.assign(record, attributes);
-        console.log(records, record);
     }
 };
 
@@ -55,6 +57,10 @@ const updateBook = function(bookId) {
     const book = new Book();
     book.update(bookId, { title, author, pages, imageUrl, readStatus });
 
+    if (localStorage.storageIsLocal) {
+        localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+    }
+
     const books = book.getAll();
     bookContainer.innerHTML = bookContainerTemplate(books);
 
@@ -66,6 +72,10 @@ const deleteBook = function(button) {
     const bookId = button.closest(".grid-item").id;
     const book = new Book();
     book.delete(bookId);
+
+    if (localStorage.storageIsLocal) {
+        localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+    }
 
     const books = book.getAll();
     bookContainer.innerHTML = bookContainerTemplate(books);
@@ -85,6 +95,10 @@ const submitBook = function() {
     const newBook = new Book();
     newBook.createBook({ title, author, pages, imageUrl, readStatus });
 
+    if (localStorage.storageIsLocal) {
+        localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+    }
+
     const books = newBook.getAll();
     bookContainer.innerHTML = bookContainerTemplate(books);
 
@@ -98,7 +112,6 @@ const openModal = function(modal, button) {
         document.querySelector("#submit-book").addEventListener("click", submitBook);
     } else if (modal === "updateBook") {
         const bookId = button.closest(".grid-item").id;
-        console.log("book ID: ", bookId);
         const book = new Book();
         const selectedBook = book.getOne(bookId);
 
@@ -137,16 +150,17 @@ const hideInfoContainer = function() {
         infoContainer.style.display = "none";
         bookContainerHeader.append(addBookBtn);
     } else {
+        bookContainer.innerHTML = "";
         infoContainer.style.display = "flex";
         infoContainer.querySelector(".info-container_content").append(addBookBtn);
     }
-}
+};
 
 const showBookDetails = function(button) {
     button.closest(".grid-item").querySelector(".grid-item_details").classList.add("active");
     overlayBackdrop.classList.add("active");
     document.body.style.overflow = "hidden";
-}
+};
 
 const hideBookDetails = function() {
     document.querySelectorAll(".grid-item_details").forEach(function(button){
@@ -156,12 +170,37 @@ const hideBookDetails = function() {
     document.body.style.overflow = "";
 };
 
+const storeLibraryLocal = function() {
+    if (localStorage.storageIsLocal && !localStorage.myLibrary) {
+        localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+    } 
+    else if (localStorage.storageIsLocal && localStorage.myLibrary !== "[]") {
+        const getBooks = JSON.parse(localStorage.getItem("myLibrary"));
+        myLibrary = getBooks;
+        bookContainer.innerHTML = bookContainerTemplate(myLibrary);
+        hideInfoContainer();
+    }
+};
 
 
-
+noStorageBtn.addEventListener("click", function() {
+    localStorage.clear();
+});
+localStorageBtn.addEventListener("click", function(){
+    localStorage.setItem("storageIsLocal", true);
+    storeLibraryLocal();
+});
+storageSettings.addEventListener("click", function() {
+    if (!storageSettings.classList.contains("active")) {
+        this.classList.add("active");
+    } else {
+        this.classList.remove("active");
+    }
+});
 addBookBtn.addEventListener("click", function() {
     openModal("addBook", null);
 });
+
 document.addEventListener("click", function(event){
     const clickedButton = event.target;
 
@@ -175,4 +214,9 @@ document.addEventListener("click", function(event){
         openModal("updateBook", clickedButton);
         hideBookDetails();
     }
+    if (!storageSettings.contains(event.target)) {
+        storageSettings.classList.remove("active");
+    }
 });
+
+storeLibraryLocal();
