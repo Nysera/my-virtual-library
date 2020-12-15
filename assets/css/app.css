@@ -123,7 +123,12 @@ header {
     justify-content: center;
     width: 100%;
     text-align: center;
-    padding: 40px 20px;
+    padding: 80px 20px;
+}
+@media(min-width: 768px) {
+    header {
+        padding: 40px 20px;
+    }
 }
 header h1 svg {
     display: inline-block;
@@ -250,13 +255,14 @@ header h1 span {
     height: 100%;
     background-color: var(--overlay-bg);
     opacity: 0;
-    z-index: -1;
-    transition: opacity 0.7s ease, z-index 0s 0.7s;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0s 0.4s ease;
 }
 .overlay-backdrop.active {
     opacity: 1;
+    visibility: visible;
     z-index: 10;
-    transition-delay: 0s;
+    transition: opacity 0.4s ease, visibility 0s ease;
 }
 
 /* book container */
@@ -333,9 +339,19 @@ header h1 span {
     height: 100%;
     background-color: var(--overlay-bg);
     opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0s 0.4s ease;
+}
+.book-container .book-container_grid .grid-item .grid-item_inner .grid-item_image .grid-item_image-details-overlay button {
+    opacity: 0;
     transition: opacity 0.4s ease;
 }
 .book-container .book-container_grid .grid-item .grid-item_inner:hover .grid-item_image .grid-item_image-details-overlay {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s ease, visibility 0s 0.1s ease;
+}
+.book-container .book-container_grid .grid-item .grid-item_inner:hover .grid-item_image .grid-item_image-details-overlay button {
     opacity: 1;
 }
 .book-container .book-container_grid .grid-item .grid-item_inner .grid-item_title {
@@ -354,8 +370,8 @@ header h1 span {
     width: 100%;
     height: 100%;
     opacity: 0;
-    z-index: -1;
-    transition: opacity 0.7s ease, z-index 0s 0.7s;
+    visibility: hidden;
+
 }
 .book-container .book-container_grid .grid-item .grid-item_details {
     display: flex;
@@ -365,8 +381,9 @@ header h1 span {
 }
 .book-container .book-container_grid .grid-item .grid-item_details.active {
     opacity: 1;
+    visibility: visible;
     z-index: 20;
-    transition-delay: 0s;
+    transition: opacity 0.4s ease, visibility 0s ease;
 }
 @media(min-width: 600px) {
     .book-container .book-container_grid .grid-item .grid-item_details {
@@ -495,4 +512,118 @@ header h1 span {
 }
 .book-container .book-container_grid .grid-item .grid-item_details .details-inner .details-inner_content .content_buttons button.btn-hollow {
     border-radius: 0 4px 4px 0;
+}
+
+/* storage settings button */
+.storage-settings {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+.storage-settings .storage-settings_inner .storage-settings_btn {
+    display: block;
+    font-family: "Open Sans", sans-serif;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    border: 1px solid transparent;
+    background-color: transparent;
+    cursor: pointer;
+
+}
+.storage-settings .storage-settings_inner .storage-settings_btn svg {
+    display: inline-block;
+    vertical-align: middle;
+    width: 22px;
+    height: 22px;
+    fill: var(--primary);
+    margin-right: 5px;
+    transition: opacity 0.4s ease;
+}
+.storage-settings:hover .storage-settings_inner .storage-settings_btn svg {
+    opacity: 0.6;
+}
+.storage-settings.active .storage-settings_inner .storage-settings_btn svg {
+    opacity: 0.6;
+}
+.storage-settings .storage-settings_inner .storage-settings_btn span {
+    display: inline-block;
+    vertical-align: middle;
+    color: var(--primary-typo);
+    font-size: 14px;
+    transition: opacity 0.4s ease;
+}
+.storage-settings:hover .storage-settings_inner .storage-settings_btn span {
+    opacity: 0.6;
+}
+.storage-settings.active .storage-settings_inner .storage-settings_btn span {
+    opacity: 0.6;
+}
+
+/* storage settings drop-down */
+.storage-settings .storage-settings_dropdown {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 280px;
+    margin-top: 50px;
+    background: #fff;
+    box-shadow: 0 10px 20px rgb(74 79 84 / 16%);
+    transform: translateY(20px);
+    overflow: hidden;
+    transition: transform 0.4s ease, opacity 0.4s ease, visibility 0s 0.4s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+.storage-settings.active .storage-settings_inner .storage-settings_dropdown {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    z-index: 5;
+    transition: transform 0.4s ease, opacity 0.4s ease, visibility 0s ease;
+}
+.storage-settings .storage-settings_dropdown ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.storage-settings .storage-settings_dropdown ul li {
+    padding: 0;
+    margin: 0;
+}
+.storage-settings .storage-settings_dropdown ul li {
+    position: relative;
+    height: 46px;
+    line-height: 46px;
+    border-bottom: 1px solid #ECEBEC;
+    transition: background-color 0.4s ease;
+}
+.storage-settings .storage-settings_dropdown ul li .storage-settings_dropdown-btn {
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-family: "Open Sans", sans-serif;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    border: 1px solid transparent;
+    background-color: transparent;
+    transition: background-color 0.4s ease;
+    cursor: pointer;
+}
+.storage-settings .storage-settings_dropdown ul li .storage-settings_dropdown-btn:hover {
+    background-color: #e1eefb;
+}
+.storage-settings .storage-settings_dropdown ul li .storage-settings_dropdown-btn span {
+    display: block;
+    font-size: 14px;
+    padding: 0 50px 0 20px;
+}
+.storage-settings .storage-settings_dropdown ul li .storage-settings_dropdown-btn svg {
+    position: absolute;
+    top: 13px;
+    right: 15px;
+    width: 20px;
+    height: 20px;
+    fill: var(--primary);
 }
