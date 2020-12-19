@@ -15,6 +15,7 @@ html {
     --primary-typo: #4A4F54;
     --background: #F6F6F6;
     --overlay-bg: rgb(26 28 31 / 90%);
+    --form-error-color: #c73f3f;
 }
 body {
     color: var(--primary-typo);
@@ -89,6 +90,11 @@ label {
     padding-bottom: 12px;
     margin: 0;
 }
+label span {
+    color: var(--form-error-color);
+    font-size: 14px;
+    margin-right: 7px;
+}
 input[type="text"], input[type="number"] {
     display: block;
     width: 100%;
@@ -100,7 +106,7 @@ input[type="text"], input[type="number"] {
     border-radius: 4px;
     background-color: var(--background);
     padding: 9px;
-    margin: 0;
+    margin: 0 0 16px 0;
 
 }
 select {
@@ -113,7 +119,7 @@ select {
     border-radius: 4px;
     background-color:var(--background);
     padding: 7px;
-    margin: 0;
+    margin: 0 0 16px 0;
 }
 
 /* header */
@@ -232,6 +238,10 @@ header h1 span {
 .form-modal .form-modal_inner form .input-wrapper {
     margin-bottom: 30px;
 }
+.form-modal .form-modal_inner form .input-wrapper .error-list {
+    color: var(--form-error-color);
+    font-size: 14px;
+}
 .form-modal .form-modal_inner form .input-wrapper.submit {
     margin: 24px 0 0;
 }
@@ -244,6 +254,17 @@ header h1 span {
 .form-modal .form-modal_inner.active {
     transform: translateY(0);
     transition: transform 0.7s ease;
+}
+
+/*  */
+.form-modal .form-modal_inner form .input-wrapper.error label {
+    color: var(--form-error-color);
+}
+.form-modal .form-modal_inner form .input-wrapper.error input {
+    border: 2px solid var(--form-error-color);
+}
+.form-modal .form-modal_inner form .input-wrapper.error select {
+    border: 2px solid var(--form-error-color);
 }
 
 /* overlay backdrop */
