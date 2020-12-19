@@ -10,6 +10,84 @@ const noStorageBtn = document.querySelector("#no-store");
 
 let myLibrary = [];
 
+class FormValidation {
+    constructor(form, fields, modal, bookId) {
+        this.form = form;
+        this.fields = fields;
+        this.modal = modal;
+        this.bookId = bookId;
+        this.status = [];
+    }
+    init() {
+        this.validateOnSubmit();
+        this.validateOnInput();
+    }
+    validateOnSubmit() {
+        this.form.addEventListener("submit", event => {
+            event.preventDefault()
+            this.fields.forEach((field, idx) => {
+                if (this.status.length < this.fields.length) {
+                    this.status.push(this.validateFields(field)); 
+                } else {
+                    this.status[idx] = this.validateFields(field);
+                }
+            });
+            if (!this.status.includes(false)) {
+                if (this.modal === "addBook") {
+                    submitBook(this.fields);
+                } else if (this.modal === "updateBook") {
+                    updateBook(this.fields, this.bookId);
+                }
+            }
+        });
+    }
+    validateOnInput() {
+        this.fields.forEach((field, idx) => {
+            field.addEventListener("input", () =>{
+                this.status[idx] = this.validateFields(field);
+            });
+        });
+    }
+    validateFields(field) {
+        if (field.id === "title" || field.id === "author") {
+            if (field.value.trim() === "" && field.value.length === 0) {
+                return this.setFieldState(field, "This value is required.", "fail");
+            }
+            return this.setFieldState(field, null, "pass");
+        }
+        if (field.id === "pages") {
+            if (field.value <= 0) {
+                return this.setFieldState(field, "This value is required and must be 1 or more pages.", "fail");
+            }
+            return this.setFieldState(field, null, "pass");
+        }
+        if (field.id === "read-status") {
+            if (field.value === "") {
+                return this.setFieldState(field, "This value is required.", "fail");
+            }
+            return this.setFieldState(field, null, "pass");
+        }
+    }
+    setFieldState(field, message, error) {
+        const parent = field.parentElement;
+        const errorSpan = document.createElement("span");
+        if (error === "fail") {
+            parent.classList.add("error");
+            errorSpan.classList.add("error-list");
+            errorSpan.innerHTML = message;
+            if (!parent.querySelector(".error-list")) {
+                parent.append(errorSpan);
+            }
+            return false;
+        } else if (error === "pass") {
+            parent.classList.remove("error");
+            if (parent.querySelector(".error-list")) {
+                parent.querySelector(".error-list").remove();
+            }
+            return true;
+        }
+    }
+};
 
 class Book {
     constructor() {}
@@ -47,15 +125,21 @@ class Book {
     }
 };
 
-const updateBook = function(bookId) {
-    const title = document.querySelector("#title").value;
-    const author = document.querySelector("#author").value;
-    const pages = document.querySelector("#pages").value;
-    const imageUrl = document.querySelector("#image-url").value;
-    const readStatus = document.querySelector("#read-status").value;
+const updateBook = function(fields, bookId) {
+    const [ title, author, pages, imageUrl, readStatus ] = fields
 
+    if (!imageUrl.value.trim().includes("http")) {
+        imageUrl.value = "";
+    }
+    
     const book = new Book();
-    book.update(bookId, { title, author, pages, imageUrl, readStatus });
+    book.update(bookId, { 
+        title: title.value, 
+        author: author.value, 
+        pages: pages.value, 
+        imageUrl: imageUrl.value, 
+        readStatus: readStatus.value 
+    });
 
     if (localStorage.storageIsLocal) {
         localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
@@ -82,18 +166,23 @@ const deleteBook = function(button) {
 
     hideInfoContainer();
     closeModal();
-
 };
 
-const submitBook = function() {
-    const title = document.querySelector("#title").value;
-    const author = document.querySelector("#author").value;
-    const pages = document.querySelector("#pages").value;
-    const imageUrl = document.querySelector("#image-url").value;
-    const readStatus = document.querySelector("#read-status").value;
+const submitBook = function(fields) {
+    const [ title, author, pages, imageUrl, readStatus ] = fields
 
+    if (!imageUrl.value.trim().includes("http")) {
+        imageUrl.value = "";
+    }
+    
     const newBook = new Book();
-    newBook.createBook({ title, author, pages, imageUrl, readStatus });
+    newBook.createBook({ 
+        title: title.value, 
+        author: author.value, 
+        pages: pages.value, 
+        imageUrl: imageUrl.value, 
+        readStatus: readStatus.value
+    });
 
     if (localStorage.storageIsLocal) {
         localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
@@ -109,16 +198,40 @@ const submitBook = function() {
 const openModal = function(modal, button) {
     if (modal === "addBook") {
         formModalInner.innerHTML = addBookTemplate();
-        document.querySelector("#submit-book").addEventListener("click", submitBook);
+
+        const title = document.querySelector("#title");
+        const author = document.querySelector("#author");
+        const pages = document.querySelector("#pages");
+        const imageUrl = document.querySelector("#image-url");
+        const readStatus = document.querySelector("#read-status");
+
+        const form = document.querySelector("#form");
+        const validation = new FormValidation(form, [ title, author, pages, imageUrl, readStatus ], "addBook", null);
+        validation.init();
     } else if (modal === "updateBook") {
         const bookId = button.closest(".grid-item").id;
         const book = new Book();
         const selectedBook = book.getOne(bookId);
-
+        
         formModalInner.innerHTML = updateBookTemplate(selectedBook);
-        document.querySelector("#update-book").addEventListener("click", function(){
-            updateBook(bookId);
-        });
+
+        const title = document.querySelector("#title");
+        const author = document.querySelector("#author");
+        const pages = document.querySelector("#pages");
+        const imageUrl = document.querySelector("#image-url");
+        const readStatus = document.querySelector("#read-status");
+
+        if (selectedBook.readStatus === "Read") {
+            readStatus.value = "Read";
+        } else if (selectedBook.readStatus === "In Progress") {
+            readStatus.value = "In Progress"; 
+        } else if (selectedBook.readStatus === "Not Read") {
+            readStatus.value = "Not Read"; 
+        }
+
+        const form = document.querySelector("#form");
+        const validation = new FormValidation(form, [ title, author, pages, imageUrl, readStatus ], "updateBook", bookId);
+        validation.init();
     }
 
     formModal.style.display = "flex";
@@ -135,6 +248,7 @@ const openModal = function(modal, button) {
 const closeModal = function() {
     overlayBackdrop.classList.remove("active");
     formModalInner.classList.remove("active");
+    
     setTimeout(function() {
         formModal.style.display = "none";
         formModal.style.opacity = "0";
@@ -173,8 +287,7 @@ const hideBookDetails = function() {
 const storeLibraryLocal = function() {
     if (localStorage.storageIsLocal && !localStorage.myLibrary) {
         localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
-    } 
-    else if (localStorage.storageIsLocal && localStorage.myLibrary !== "[]") {
+    } else if (localStorage.storageIsLocal && localStorage.myLibrary !== "[]") {
         const getBooks = JSON.parse(localStorage.getItem("myLibrary"));
         myLibrary = getBooks;
         bookContainer.innerHTML = bookContainerTemplate(myLibrary);
@@ -214,6 +327,7 @@ document.addEventListener("click", function(event){
         openModal("updateBook", clickedButton);
         hideBookDetails();
     }
+
     if (!storageSettings.contains(event.target)) {
         storageSettings.classList.remove("active");
     }
