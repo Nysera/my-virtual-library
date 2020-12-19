@@ -6,17 +6,17 @@ const addBookTemplate = function(){
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path d="M13.957 3.457l-1.414-1.414-4.543 4.543-4.543-4.543-1.414 1.414 4.543 4.543-4.543 4.543 1.414 1.414 4.543-4.543 4.543 4.543 1.414-1.414-4.543-4.543z"></path></svg>
             </button>
         </div>
-        <form autocomplete="off">
+        <form id="form" autocomplete="off">
             <div class="input-wrapper">
-                <label for="title">Title:</label>
+                <label for="title"><span>*</span>Title:</label>
                 <input type="text" id="title" name="title" placeholder="The Sentinel">
             </div>
             <div class="input-wrapper">
-                <label for="author">Author:</label>
+                <label for="author"><span>*</span>Author:</label>
                 <input type="text" id="author" name="author" placeholder="Lee Child, Andrew Child">
             </div>
             <div class="input-wrapper">
-                <label for="pages">Number Of Pages:</label>
+                <label for="pages"><span>*</span>Number Of Pages:</label>
                 <input type="number" id="pages" name="pages" placeholder="400">
             </div>
             <div class="input-wrapper">
@@ -24,7 +24,7 @@ const addBookTemplate = function(){
                 <input type="text" id="image-url" name="image-url" placeholder="Cover image from booktopia.com.au">
             </div>
             <div class="input-wrapper">
-                <label for="read-status">Read Status:</label>
+                <label for="read-status"><span>*</span>Read Status:</label>
                 <select id="read-status" name="read-status">
                     <option value="">-- Please select an option --</option>
                     <option value="Read">Read</option>
@@ -33,7 +33,7 @@ const addBookTemplate = function(){
                 </select>
             </div>
             <div class="input-wrapper submit">
-                <button type="button" id="submit-book" class="btn btn-solid">Add Book</button>
+                <button class="btn btn-solid">Add Book</button>
             </div>
         </form>
     `;
