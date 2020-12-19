@@ -13,7 +13,7 @@ const bookContainerTemplate = function(books){
         if (book.imageUrl != "") {
             return book.imageUrl;
         } else {
-            return "/assets/images/placeholder-cover.jpg";
+            return "assets/images/placeholder-cover.jpg";
         }
     }
 
